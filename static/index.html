@@ -43,7 +43,7 @@ function debug(str) {
 debug("Test");
 
 world = {};
-
+//Reference: https://github.com/Henry417E1610/CMPUT404-assignment-ajax
 //XXX: TODO Make this prettier!
 function drawCircle(context,entity) {
     with(context) {
@@ -55,7 +55,7 @@ function drawCircle(context,entity) {
         fillStyle = entity["colour"];
         strokeStyle = fillStyle;
         arc(x, y, (entity["radius"])?entity["radius"]:50, 0, 2.0 * Math.PI, false);  
-        stroke();                                
+        fill();                                
     }
 }
 

@@ -27,6 +27,7 @@ sockets = Sockets(app)
 app.debug = True
 clients = list()
 
+# Reference(line 31-46): https://github.com/abramhindle/WebSocketsExamples/blob/master/chat.py
 def send_all(msg):
     for client in clients:
         client.put(msg)
@@ -89,6 +90,7 @@ def hello():
     '''Return something coherent here.. perhaps redirect to /static/index.html '''
     return redirect("/static/index.html")
 
+# Reference(line 94-126): https://github.com/abramhindle/WebSocketsExamples/blob/master/chat.py
 def read_ws(ws,client):
     '''A greenlet function that reads from the websocket and updates the world'''
     # XXX: TODO IMPLEMENT ME
@@ -123,6 +125,7 @@ def subscribe_socket(ws):
         clients.remove(client)
         gevent.kill(g)
 
+# Reference: https://github.com/Henry417E1610/CMPUT404-assignment-ajax
 # I give this to you, this is how you get the raw body/data portion of a post in flask
 # this should come with flask but whatever, it's not my project.
 def flask_post_json():
