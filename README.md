@@ -59,3 +59,16 @@ Contributors
 * Mark Galloway
 * Abram Hindle
 * Cole Mackenzie
+* Renyu He (CCID: renyu)
+
+References
+==========
+
+https://github.com/Henry417E1610/CMPUT404-assignment-websockets.git
+
+https://github.com/abramhindle/WebSocketsExamples/blob/master/chat.py
+
+Collaborators' CCID
+===================
+
+jionghao
