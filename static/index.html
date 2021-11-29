@@ -125,6 +125,9 @@ function addEntity(entity, data) {
     world[entity] = data;
     drawNextFrame(); // (but should we?)
     //XXX: Send a XHTML Request that updates the entity you just modified!
+    new_data = {};
+    new_data[entity] = data;
+    socket.send(JSON.stringify(new_data));
 }
 var counter = 0;
 function addEntityWithoutName(data) {
@@ -228,18 +231,26 @@ mouse = (function() {
     return self;
 })();
 
+function random_color(){
+    function random_index() {
+        return Math.floor(Math.random() * 255);
+    }
+    var color = "rgb("+random_index()+","+random_index()+","+random_index()+")";
+    return color;
+}
+
 // Add the application specific mouse listeners!
 //XXX: TODO Make these prettier!
 mouse.mousedowners.push(function(x,y,clicked,e) {
-    addEntityWithoutName({'x':x,'y':y,'colour':'blue'});
+    addEntityWithoutName({'x':x,'y':y,'colour':random_color()});
 });
 
 mouse.mouseuppers.push(function(x,y,clicked,e) {
-    addEntityWithoutName({'x':x,'y':y,'colour':'red'});
+    addEntityWithoutName({'x':x,'y':y,'colour':random_color()});
 });
 
 mouse.mousedraggers.push(function(x,y,clicked,e) {
-    addEntityWithoutName({'x':x,'y':y,'colour':'green',
+    addEntityWithoutName({'x':x,'y':y,'colour':random_color(),
                           'radius':10});
 });
 
@@ -254,6 +265,7 @@ function wsSetup() {
     socket = new WebSocket(url);
     socket.onopen = function() {
         //XXX: TODO What are you going to do here?
+        socket.send(JSON.stringify(world))
     };
     socket.onerror = function(msg) {
         debug("WebSocket Error:" + msg.data);
@@ -261,7 +273,12 @@ function wsSetup() {
     socket.onmessage = function(msg) {  
         try {
             debug("WebSocket Recv:" + msg.data);
-            //XXX: TODO What are you going to do here?            
+            //XXX: TODO What are you going to do here?
+            var message = JSON.parse(msg.data)
+            for (let value in message){
+                world[value] = message[value]
+            }
+            drawNextFrame()            
         } catch (e) {
             alert("socket on message: " + e);
         }
